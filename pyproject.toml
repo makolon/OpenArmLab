@@ -92,3 +92,9 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+[tool.uv]
+# Limit resolution/install to Linux x86_64 and avoid pulling Windows-only deps like pywin32.
+required-environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+override-dependencies = ["pywin32==306; sys_platform == 'win32'"]
