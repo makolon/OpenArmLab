@@ -8,24 +8,22 @@ Isaac Lab extension for the OpenArm manipulator, providing base uni-/bimanual re
 - Ships an example launcher that wires Isaac Lab tasks into Gymnasium for quick rollouts or integration tests.
 
 ## Requirements
-- Isaac Lab `2.3.1` with Isaac Sim (matches `isaaclab` pin in `pixi.toml`).
-- Python 3.11 (managed via pixi) and a CUDA-capable GPU for Torch.
+- Isaac Lab `2.3.1` with Isaac Sim (matches the `isaaclab` pin in `pyproject.toml`).
+- Python 3.11 (managed via uv) and a CUDA-capable GPU for Torch.
+- uv installed (`curl -fsSL https://astral.sh/uv/install.sh | sh`).
 - OpenArm assets from `isaaclab_assets` (pulled automatically through dependencies).
 
 ## Setup and usage
-1) Install dependencies with pixi:
+1) Install dependencies with uv (add `--extra dev` if you want dev tools):
    ```bash
-   pixi install
+   uv sync --extra dev
    ```
-2) Enter the environment (optional if using `pixi run`):
+2) Launch the sample environment (choose an Isaac Lab task id that is registered in your setup):
    ```bash
-   pixi shell
-   ```
-3) Launch the sample environment (choose an Isaac Lab task id that is registered in your setup):
-   ```bash
-   pixi run python scripts/01_create_env.py --task <TASK_NAME> --num_envs 1
+   uv run python scripts/01_create_env.py --task <TASK_NAME> --num_envs 1 --headless
    ```
    Use `--robot_name` if your task registers the robot under a different name, and pass AppLauncher flags like `--headless` as needed.
+   (If you prefer to activate the venv: `source .venv/bin/activate` after `uv sync`.)
 
 ## Project layout
 - `source/openarmlab/config/extension.toml` — extension metadata (title, description, README pointer).
@@ -35,4 +33,4 @@ Isaac Lab extension for the OpenArm manipulator, providing base uni-/bimanual re
 
 ## Development notes
 - Extend the base task configs to register your own OpenArm tasks with custom observations/actions/rewards.
-- Code style is configured via `ruff.toml`; run `pixi run ruff check .` after changes.
+- Code style is configured in `pyproject.toml` (ruff section); install ruff (e.g., `uv tool install ruff`) and run `uv run ruff check .` after changes.

@@ -9,7 +9,7 @@ ENV OPENARMLAB_PATH=${OPENARMLAB_PATH_ARG}
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     CUDA_HOME=/usr/local/cuda \
-    PATH=/root/.pixi/bin:/root/.local/bin:$PATH \
+    PATH=/root/.local/bin:$PATH \
     TZ=Asia/Tokyo
 
 # Install all system dependencies
@@ -101,8 +101,8 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pixi
-RUN curl -fsSL https://pixi.sh/install.sh | bash
+# Install uv (Python package/dependency manager)
+RUN curl -fsSL https://astral.sh/uv/install.sh | sh
 
 # Set working directory
 WORKDIR ${OPENARMLAB_PATH}
