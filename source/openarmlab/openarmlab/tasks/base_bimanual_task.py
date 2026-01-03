@@ -1,6 +1,7 @@
 import math
 from dataclasses import MISSING
 
+import isaaclab.envs.mdp as mdp
 import isaaclab.sim as sim_utils
 from isaaclab.assets import ArticulationCfg, AssetBaseCfg
 from isaaclab.managers import ActionTermCfg as ActionTerm
@@ -15,8 +16,6 @@ from isaaclab.scene import InteractiveSceneCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.noise import AdditiveUniformNoiseCfg as Unoise
 from isaaclab_assets.robots.openarm import OPENARM_BI_HIGH_PD_CFG
-
-import isaaclab_tasks.manager_based.manipulation.reach.mdp as mdp
 
 ##
 # Scene definition

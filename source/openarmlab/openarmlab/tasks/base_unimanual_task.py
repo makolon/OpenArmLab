@@ -90,7 +90,7 @@ class ObservationsCfg:
                 "asset_cfg": SceneEntityCfg(
                     "robot",
                     joint_names=[
-                        "openarm_left_joint.*",
+                        "openarm_joint.*",
                     ],
                 )
             },
@@ -103,7 +103,7 @@ class ObservationsCfg:
                 "asset_cfg": SceneEntityCfg(
                     "robot",
                     joint_names=[
-                        "openarm_left_joint.*",
+                        "openarm_joint.*",
                     ],
                 )
             },
