@@ -1,0 +1,37 @@
+[project]
+name = "openarmlab"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.11.*"
+pip = "*"
+
+[pypi-dependencies]
+imageio = ">=2.37.0"
+imageio-ffmpeg = ">=0.6.0"
+pillow = ">=11.2.1"
+tyro = ">=0.8.8"
+matplotlib = ">=3.10.0"
+pyyaml = ">=6.0.2"
+tqdm = ">=4.67.1"
+viser = ">=0.2.11"
+opencv-python = ">=4.11.0.86"
+torch = ">=2.0.0"
+torchvision = ">=0.15.0"
+torchaudio = ">=2.0.0"
+torchmetrics = { version = ">=1.8.2", extras = ["image"] }
+isaaclab = { version = "==2.3.1", extras = ["isaacsim", "all"] }
+scikit-learn = ">=1.7.2"
+tensorboard = ">=2.20.0"
+tensorly = ">=0.9.0"
+rl-games = { git = "https://github.com/isaac-sim/rl_games.git" }
+lerobot = { git = "https://github.com/huggingface/lerobot.git" }
+
+[feature.dev.pypi-dependencies]
+pytest = ">=7.0.0"
+pytest-cov = ">=4.0.0"
+black = ">=22.0.0"
+flake8 = ">=4.0.0"
+mypy = ">=0.991"
+pre-commit = ">=2.20.0"

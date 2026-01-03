@@ -1,0 +1,68 @@
+x-default-openarmlab-volumes: &default-openarmlab-volumes
+  - type: bind
+    source: /usr/share/nvidia/nvoptix.bin
+    target: /usr/share/nvidia/nvoptix.bin
+    read_only: true
+  - type: bind
+    source: /tmp/.X11-unix
+    target: /tmp/.X11-unix
+  - type: bind
+    source: /etc/localtime
+    target: /etc/localtime
+    read_only: true
+  - type: bind
+    source: ./
+    target: ${OPENARMLAB_PATH}
+
+x-default-openarmlab-environment: &default-openarmlab-environment
+  - OMNI_KIT_ALLOW_ROOT=1
+  - DISPLAY
+  - TERM
+  - QT_X11_NO_MITSHM=1
+  - NVIDIA_DRIVER_CAPABILITIES=all
+  - NVIDIA_VISIBLE_DEVICES=all
+  - MESA_GL_VERSION_OVERRIDE
+  - TORCH_CUDA_ARCH_LIST=7.0;7.5;8.0;8.6;8.9;9.0
+  - CUDA_VISIBLE_DEVICES
+
+x-default-openarmlab-deploy: &default-openarmlab-deploy
+  resources:
+    reservations:
+      devices:
+        - driver: nvidia
+          count: all
+          capabilities: [ gpu ]
+
+services:
+  # This service is the vnc desktop image
+  desktop:
+    image: ghcr.io/matsuolab/virtual_desktop:latest
+    runtime: nvidia
+    environment: *default-openarmlab-environment
+    ports:
+      - "${WEB_PORT}:6080"
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+    security_opt:
+      - seccomp:unconfined
+    deploy: *default-openarmlab-deploy
+
+  openarmlab:
+    profiles: [ "openarmlab" ]
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        - OPENARMLAB_PATH_ARG=${OPENARMLAB_PATH:-NONE}
+    image: openarmlab:latest
+    depends_on:
+      - desktop
+    shm_size: '16gb'
+    environment: *default-openarmlab-environment
+    volumes: *default-openarmlab-volumes
+    network_mode: host
+    deploy: *default-openarmlab-deploy
+    # This is the entrypoint for the container
+    entrypoint: ["bash"]
+    stdin_open: true
+    tty: true
